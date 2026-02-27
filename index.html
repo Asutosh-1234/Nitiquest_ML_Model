@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkyWatch — Drone & Bird Detector</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- Background grid -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <span class="logo-icon">◈</span>
+      <span class="logo-text">SKY<strong>WATCH</strong></span>
+    </div>
+    <nav>
+      <span class="nav-tag">AI Detection System</span>
+      <span class="status-dot"></span>
+      <span class="status-text">Model Online</span>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-label">AERIAL OBJECT CLASSIFIER v1.0</div>
+    <h1>Identify <span class="accent">Drones</span><br/>from <span class="accent2">Birds</span></h1>
+    <p class="hero-sub">Upload any aerial image. Our YOLOv8 model detects and classifies objects in milliseconds.</p>
+  </section>
+
+  <!-- Main App -->
+  <main>
+    <!-- Upload Zone -->
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept="image/*" hidden />
+      <div class="upload-inner" id="uploadInner">
+        <div class="upload-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <path d="M24 8L24 32M24 8L16 16M24 8L32 16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 36H40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <p class="upload-title">Drop image here</p>
+        <p class="upload-sub">or <span class="browse-link" id="browseBtn">browse files</span></p>
+        <p class="upload-formats">JPG · PNG · WEBP · BMP</p>
+      </div>
+    </div>
+
+    <!-- Preview + Results -->
+    <div class="result-container" id="resultContainer">
+
+      <!-- Image Preview Panel -->
+      <div class="panel preview-panel">
+        <div class="panel-header">
+          <span class="panel-label">INPUT IMAGE</span>
+          <button class="btn-reset" id="resetBtn">✕ Clear</button>
+        </div>
+        <div class="preview-wrapper">
+          <img id="previewImg" src="" alt="Preview" />
+          <canvas id="detectionCanvas"></canvas>
+        </div>
+        <div class="img-meta" id="imgMeta"></div>
+      </div>
+
+      <!-- Results Panel -->
+      <div class="panel results-panel">
+        <div class="panel-header">
+          <span class="panel-label">DETECTION RESULTS</span>
+          <span class="result-count" id="resultCount">—</span>
+        </div>
+
+        <!-- Analyzing State -->
+        <div class="analyzing" id="analyzingState">
+          <div class="radar">
+            <div class="radar-ring r1"></div>
+            <div class="radar-ring r2"></div>
+            <div class="radar-ring r3"></div>
+            <div class="radar-dot"></div>
+          </div>
+          <p>Analyzing image...</p>
+        </div>
+
+        <!-- Results List -->
+        <div class="detections-list" id="detectionsList"></div>
+
+        <!-- Stats Row -->
+        <div class="stats-row" id="statsRow">
+          <div class="stat-box" id="statBirds">
+            <span class="stat-num" id="birdCount">0</span>
+            <span class="stat-label">Birds</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-box" id="statDrones">
+            <span class="stat-num" id="droneCount">0</span>
+            <span class="stat-label">Drones</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-box">
+            <span class="stat-num" id="avgConf">—</span>
+            <span class="stat-label">Avg Conf</span>
+          </div>
+        </div>
+
+        <!-- No Detection -->
+        <div class="no-detection" id="noDetection">
+          <span>⊘</span>
+          <p>No objects detected</p>
+          <small>Try a clearer image with better contrast</small>
+        </div>
+
+        <!-- Download Button -->
+        <button class="btn-download" id="downloadBtn">
+          ↓ Download Annotated Image
+        </button>
+      </div>
+
+    </div>
+
+    <!-- How it works -->
+    <section class="how-it-works">
+      <div class="hiw-label">HOW IT WORKS</div>
+      <div class="hiw-steps">
+        <div class="hiw-step">
+          <span class="step-num">01</span>
+          <h3>Upload</h3>
+          <p>Drop any aerial or sky image into the detector</p>
+        </div>
+        <div class="hiw-arrow">→</div>
+        <div class="hiw-step">
+          <span class="step-num">02</span>
+          <h3>Detect</h3>
+          <p>YOLOv8 scans the image for aerial objects</p>
+        </div>
+        <div class="hiw-arrow">→</div>
+        <div class="hiw-step">
+          <span class="step-num">03</span>
+          <h3>Classify</h3>
+          <p>Each object is labeled as Bird or Drone with confidence score</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>SkyWatch Detection System</span>
+    <span class="footer-sep">·</span>
+    <span>YOLOv8n · Trained on 18K images</span>
+    <span class="footer-sep">·</span>
+    <span>mAP50: 0.691</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
